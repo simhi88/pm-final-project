@@ -9,5 +9,5 @@
 
 ## Cold-read your own hook
 - **Is the business risk high enough to justify a new initiative, a high-stakes threat, or a minor inconvenience?:** Yes, it's a high stake risk because the risk touches cost (agent capacity), strategic portfolio value (company plans that might fail).
-- **Is the moment of misery a systemic problem or just an edge case?:** _(not filled in)_
-- **Does the value proposition actually remove the obstacle you identified, or is it a generic feature?:** _(not filled in)_
+- **Is the moment of misery a systemic problem or just an edge case?:** It's a systematic problem.
+- **Does the value proposition actually remove the obstacle you identified, or is it a generic feature?:** Yes, it will remove the obstacles.
