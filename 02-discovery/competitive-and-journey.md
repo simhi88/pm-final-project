@@ -13,4 +13,4 @@ Step 5: Abandons the journey and calls an agent (stated).
 - **Core frustration, the exact moment the process feels most “broken”:** She finally reaches an agent, and has to start from zero.
 - **The evidence, a specific quote or behavior from the research that proves this:** Behavioural: Daniel repeats checks because online input doesn't travel with the consumer (strongest).
 The brief states that consumers who start online "often reach him with incomplete information, so he repeats identity, affordability and case checks." This is the closest thing to proof of the "start from zero" moment, and it comes from the agent's side of the interaction.
-- **Your journey map, a shareable link, or the map file you committed (e.g. journey-map.html):** _(not filled in)_
+- **Your journey map, a shareable link, or the map file you committed (e.g. journey-map.html):** 02-discovery/Screenshot 2026-10-06 144355.png
