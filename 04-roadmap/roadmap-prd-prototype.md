@@ -19,4 +19,4 @@ Save-and-resume with a gentle reminder
 ## Generate your interactive roadmap
 - **My “Now” lane (this sprint), the 2 to 3 quick wins I’ll build first:** _(not filled in)_
 - **What I cut, and the “no” I’m protecting the scope from:** _(not filled in)_
-- **Prototype/roadmap screenshot link (paste into your deliverables):** _(not filled in)_
+- **Prototype/roadmap screenshot link (paste into your deliverables):** 04-roadmap/streamline-spotlight-roadmap.html
