@@ -1,17 +1,35 @@
-# Hypothesis & Success Metrics
+# Hypothesis & Success Metrics (Module 3)
 
-> **Module 3 · ★ Deliverable 3.** Repo file `03-analytics/hypothesis-and-metrics.md` — part of your submission.
-> Do the lab in the **Module 3 · Exercise Guide** (linked from the Module 3 deck), then click **⬇ Download .md** — it saves as this exact file. Commit it here.
-> It feeds the **Problem, Value & Hypothesis** slide of your Module 6 final deck.
+## Pre-work · Hypothesis check
+- **Role , who you are solving for (from M2):** Mara, 38, a shift worker with variable income and two open claims. She can't pay in full and opens the portal on her phone after a digital reminder, with little time to spare.
+- **Goal , what this user is ultimately trying to achieve:** To agree on an instalment plan she can actually keep, covering both claims, without making her situation worse.
+- **Friction / moment of misery , the specific pain blocking their goal:** At the income step she is asked for documents she can't easily find, and her shift-based income fits no single payslip. She doesn't know why the information is needed, whether a plan would be affordable, or what happens if she answers wrongly or misses a payment. Fearing a wrong answer could backfire, she stops and calls an agent.
+- **Current workaround , the external tool or manual process they rely on (M2):** She abandons the journey and phones an agent. Beforehand she probably searches email, photos or her banking app for proof of income and estimates affordability on her own. On the call she restates everything because nothing she entered online reaches the agent.
+- **Problem Hook , your one-sentence framing of the business crisis (M1):** We must reduce avoidable agent contact by resolving the uncertainty that makes consumers abandon the instalment journey and call.
+- **Value Proposition , the outcome your initiative promised to deliver (M1):** For consumers who can't pay in full, we will offer a guided portal journey because starters abandon or call before finishing, and plans agreed without clarity often break.
 
-## Finalized product hypothesis
+## Read your data snapshots
+- **Does the funnel data confirm your M2 friction point, or does it tell a different story? Note where the numbers align with the qualitative pain you found and where they diverge.:** _(not filled in)_
+- **Do the retention patterns align with the workaround your M2 persona used to find content? Note what the Mo. 0→1 drop suggests about the onboarding experience your persona described as frustrating.:** _(not filled in)_
+- **Does the LTV gap and the content mix (61% trending for Wanderers) confirm the moment of misery your persona described? Note which segment your persona is in and whether the data confirms their pain.:** _(not filled in)_
+- **Does the low adoption confirm your persona is burdened by tools they don’t use? Note whether the low scheduling adoption (42%) for coordinators matches your M2 moment of misery.:** _(not filled in)_
+- **Does the workflow data match the manual process or hack you documented in M2? Note whether the specific drop-offs or time gaps explain why your persona avoids the digital tool.:** _(not filled in)_
+- **Look at the CSAT heatmap. Which specific cell most directly maps to your persona’s friction? Note how the NPS trend justifies the urgency of your M1 Problem Hook.:** _(not filled in)_
 
-> Based on [qual + quant evidence], I believe that [solving X] for [persona] will result in [outcome], as measured by a [X%] change in [success metric]. I will protect [guardrail metric] and make a go/no-go decision after [decision window].
+## Step 3 · Craft your hypothesis
+- **Qualitative evidence (from M2) , quote the specific friction / moment of misery for your persona:** The brief's own description of Mara: "She isn't sure whether a plan would be affordable, why she's being asked about her income, what happens if she misses a payment... If the journey confuses her or asks for documents she can't easily find, she calls an agent." Research themes 1 to 3 back this up: consumers don't know what is affordable, don't understand why information is requested, and fear the consequences of a wrong answer or a missed payment.
+- **Quantitative evidence (from M3) , name the metric or data point that confirms the pain; cite the number:** 31% of journey starters contact an agent within 7 days. 28% of uploaded income documents need clarification or review. 19% of new agreements miss a payment within 60 days. Only 46% of started journeys end in an agreement.
+- **Persona , role, goal, and the friction you confirmed in the reconciliation steps:** Role: Mara, 38, a shift worker with variable income and two open claims, who opens the portal on her phone after a digital reminder.
 
-## Success metrics
+Goal: To agree on an instalment plan she can keep, covering both claims, without making her situation worse.
 
-| Metric | Type | Target | Why it matters |
-|---|---|---|---|
-| _North-star_ | | _____ | _____ |
-| _Leading indicator_ | | _____ | _____ |
-| _Guardrail_ | | _____ | _____ |
+Friction: At the income step she can't find documents that fit shift-based income and doesn't know why they're needed or what her answer commits her to. Fearing a wrong answer could backfire, she stops and calls an agent.
+- **Problem you are solving , one sentence describing the specific friction this initiative removes:** Consumers like Mara abandon the instalment journey and call an agent because the income step doesn't explain why information is needed, what is affordable, or what a missed payment means.
+- **Strategic outcome , what behaviour change do you expect, and how does it map to retention / revenue / churn?:** Fewer variable-income consumers abandon and call, and more complete a plan they understand. For Riverty this maps to less avoidable agent work, more agreements that hold, and better lifetime value on purchased portfolios. In this case the equivalent of retention, revenue and churn is plan completion, plan survival and recovery performance. For client-owned receivables, it also means more responsible, transparent servicing.
+- **Primary success metric (initiative signal) , the leading indicator that tells you the gap is closing:** The share of journey starters who contact an agent within 7 days, baseline 31%, measured in the pilot segment against a comparison group. It is the only leading indicator in the brief with a baseline. The brief has no step-level data, so the income-step completion rate would be a better signal once instrumented.
+- **Guardrail metric (product signal) , the metric that must NOT drop; it protects your existing base:** The 60-day missed-payment rate on new agreements must not rise above the 19% baseline. This protects against SSR improving while plans quietly break. Track it alongside the escalation rate for vulnerable consumers and the average plan amount by subgroup, so gains don't come from pushing higher payments.
+- **Decision window , how much time or data before you scale, pivot, or kill? minimum threshold to proceed?:** - Minimum window: about 10 weeks per consumer cohort, because the guardrail needs 60 days of post-agreement data. Instrumentation must exist before launch to establish a clean baseline.
+- Scale: the 7-day contact rate falls meaningfully (proposed: at least 5 points) and the 60-day missed-payment rate is at or below 19% in every tracked subgroup.
+- Pivot: contact falls but missed payments rise, or contact doesn't move, which means the problem sits elsewhere, such as documents or offer logic.
+- Kill or pause: the guardrail worsens or a fairness issue appears in any subgroup.
+- **Draft your full hypothesis sentence , one to three sentences; quote the metric, name the persona, name the outcome:** _(not filled in)_
