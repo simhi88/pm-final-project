@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamLine Spotlight Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14233B;
+    --ink-soft: #46576F;
+    --paper: #EDF1F5;
+    --card: #FFFFFF;
+    --line: #D3DCE6;
+    --beam: #FFDF86;
+
+    --qw-fg: #0B6A56; --qw-bg: #D6F0E7;
+    --mp-fg: #3436A0; --mp-bg: #E0E1F8;
+    --fi-fg: #7A4F00; --fi-bg: #FAEAC4;
+    --ts-fg: #9A2535; --ts-bg: #F7D9DE;
+    --gb-fg: #FFFFFF; --gb-bg: #3A4658;
+
+    --display: "Familjen Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* Header */
+  header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 40px; margin-bottom: 28px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand svg { flex: none; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 4vw, 2.75rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .brand p { margin: 4px 0 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .facts li { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.875rem; font-weight: 500; }
+
+  .goal { max-width: 70ch; margin: 0 0 24px; color: var(--ink-soft); font-size: 1rem; }
+
+  /* Filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .chip {
+    appearance: none; font: inherit; font-size: 0.875rem; font-weight: 500; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 14px; cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s;
+  }
+  .chip:hover { border-color: var(--ink-soft); }
+  .chip .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
+  .chip .n { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .chip[aria-pressed="true"] .n { color: #C9D3E0; }
+  .chip[aria-pressed="true"] .dot { box-shadow: 0 0 0 2px #fff; }
+  .status { min-height: 1.5em; margin: 0 0 24px; font-size: 0.875rem; color: var(--ink-soft); }
+
+  :focus-visible { outline: 3px solid #1F5FD6; outline-offset: 2px; }
+
+  /* Board */
+  .board { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 20px; align-items: start; }
+  .lane { position: relative; border-radius: 20px; padding: 22px 20px 24px; border: 1px solid var(--line); overflow: hidden; }
+  .lane > * { position: relative; }
+
+  .lane--now {
+    background: #FFFFFF;
+    border-color: #E5C964;
+    box-shadow: 0 0 0 4px rgba(255, 223, 134, 0.35);
+  }
+  .lane--now::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(255, 223, 134, 0.75), rgba(255, 223, 134, 0) 72%);
+    animation: beam-on 1.4s ease-out both;
+  }
+  .lane--next { background: #F8FAFC; }
+  .lane--later { background: transparent; border-style: dashed; border-color: #B7C3D1; }
+
+  @keyframes beam-on { from { opacity: 0; transform: translateY(-30%); } to { opacity: 1; transform: none; } }
+
+  .lane-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .lane-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.01em; margin: 0; }
+  .lane-head .count { font-size: 0.8rem; font-weight: 600; background: var(--ink); color: #fff; border-radius: 999px; padding: 2px 10px; }
+  .lane--later .lane-head .count { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .lane-sub { margin: 0 0 18px; font-size: 0.875rem; color: var(--ink-soft); }
+  .lane--now .lane-sub { color: #4C4430; }
+
+  .cards { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left-width: 5px;
+    border-radius: 10px;
+    padding: 14px 16px 16px;
+    transition: opacity .2s, filter .2s;
+  }
+  .card h3 { font-family: var(--display); font-weight: 600; font-size: 1.1rem; line-height: 1.25; margin: 10px 0 6px; }
+  .card p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); max-width: 62ch; }
+  .lane--now .card h3 { font-size: 1.25rem; }
+  .lane--now .card p { font-size: 0.95rem; color: #33445C; }
+  .lane--later .card { background: #FBFCFD; }
+
+  .card[data-q="qw"] { border-left-color: var(--qw-fg); }
+  .card[data-q="mp"] { border-left-color: var(--mp-fg); }
+  .card[data-q="fi"] { border-left-color: var(--fi-fg); }
+  .card[data-q="ts"] { border-left-color: var(--ts-fg); }
+  .card[data-q="gb"] { border-left-color: var(--gb-bg); }
+
+  .card.is-dim { opacity: 0.22; filter: saturate(0.3); }
+
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; border-radius: 999px; padding: 3px 10px 3px 8px; }
+  .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .badge[data-q="qw"] { color: var(--qw-fg); background: var(--qw-bg); }
+  .badge[data-q="mp"] { color: var(--mp-fg); background: var(--mp-bg); }
+  .badge[data-q="fi"] { color: var(--fi-fg); background: var(--fi-bg); }
+  .badge[data-q="ts"] { color: var(--ts-fg); background: var(--ts-bg); }
+  .badge[data-q="gb"] { color: var(--gb-fg); background: var(--gb-bg); }
+  .tag { font-size: 0.78rem; font-weight: 600; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: 2px 9px; }
+
+  /* Cut list */
+  .cut { margin-top: 48px; }
+  .cut-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-bottom: 16px; }
+  .cut-head h2 { font-family: var(--display); font-weight: 700; font-size: 1.6rem; margin: 0; letter-spacing: -0.01em; }
+  .cut-head p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+  .cut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .cut .card { background: transparent; border-style: dashed; border-left-style: solid; }
+
+  footer { margin-top: 40px; font-size: 0.8rem; color: var(--ink-soft); max-width: 80ch; }
+
+  /* Responsive */
+  @media (max-width: 1020px) {
+    .board { grid-template-columns: 1fr 1fr; }
+    .lane--now { grid-column: 1 / -1; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 20px 16px 48px; }
+    .board { grid-template-columns: 1fr; }
+    .lane--now { grid-column: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lane--now::before { animation: none; }
+    .card, .chip { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="5" r="3.5" fill="#14233B"/>
+        <path d="M10.5 9 L3 26 H25 L17.5 9 Z" fill="#FFDF86" stroke="#14233B" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <h1>StreamLine Spotlight</h1>
+        <p>Product roadmap</p>
+      </div>
+    </div>
+    <ul class="facts" aria-label="Team and cadence">
+      <li>2 engineers + 1 designer</li>
+      <li>3-week sprints</li>
+    </ul>
+  </header>
+
+  <p class="goal">Goal: fewer journey starters calling an agent within 7 days (31% to 26%), without the 60-day missed-payment rate rising above 19% in any subgroup.</p>
+
+  <div class="filters" id="filters" role="group" aria-label="Filter by quadrant"></div>
+  <p class="status" id="status" aria-live="polite"></p>
+
+  <main>
+    <div class="board" id="board">
+      <section class="lane lane--now" aria-labelledby="h-now">
+        <div class="lane-head"><h2 id="h-now">Now</h2><span class="count" id="c-now"></span></div>
+        <p class="lane-sub">3-week sprint, weeks 1 to 3</p>
+        <ul class="cards" id="l-now"></ul>
+      </section>
+      <section class="lane lane--next" aria-labelledby="h-next">
+        <div class="lane-head"><h2 id="h-next">Next</h2><span class="count" id="c-next"></span></div>
+        <p class="lane-sub">Following 1 to 2 sprints, weeks 4 to 9</p>
+        <ul class="cards" id="l-next"></ul>
+      </section>
+      <section class="lane lane--later" aria-labelledby="h-later">
+        <div class="lane-head"><h2 id="h-later">Later</h2><span class="count" id="c-later"></span></div>
+        <p class="lane-sub">Backlog, not scheduled</p>
+        <ul class="cards" id="l-later"></ul>
+      </section>
+    </div>
+
+    <section class="cut" aria-labelledby="h-cut">
+      <div class="cut-head">
+        <h2 id="h-cut">Cut list</h2>
+        <p>Not scheduled. Reasons are recorded so nobody reopens them by accident.</p>
+      </div>
+      <ul class="cut-grid" id="l-cut"></ul>
+    </section>
+  </main>
+
+  <footer>
+    Quick Win: high value, low effort. Major Project: high value, high effort. Fill-In: lower value, low effort. Time Sinker: lower value, high effort. Guardrail breach: cut regardless of score because it would work against the 60-day missed-payment guardrail or the rule that no model decides an adverse outcome alone.
+  </footer>
+</div>
+
+<script>
+  const QUADS = {
+    qw: { label: "Quick Win",        hint: "High value, low effort" },
+    mp: { label: "Major Project",    hint: "High value, high effort" },
+    fi: { label: "Fill-In",          hint: "Lower value, low effort" },
+    ts: { label: "Time Sinker",      hint: "Lower value, high effort" },
+    gb: { label: "Guardrail breach", hint: "Cut regardless of score: it works against the guardrail" }
+  };
+
+  const ITEMS = [
+    // NOW
+    { lane: "now", q: "fi", tag: "Build first",
+      name: "Instrumentation dashboard",
+      why: "A gate rather than a feature: without step-level drop-off, agent contacts and plans kept at 60 days by subgroup, neither the 31% to 26% target nor the 19% guardrail can be proven, and the 60-day clock only starts when tracking ships." },
+    { lane: "now", q: "qw",
+      name: "\u201CWhy we ask\u201D explanations",
+      why: "A one-line reason and what is and isn\u2019t stored answers \u201Cwhy do you need this?\u201D at the income step, where Mara stops; it is copy and components, so it ships in days." },
+    { lane: "now", q: "qw",
+      name: "Consequence preview",
+      why: "Plain answers to \u201Cwhat if I miss a payment?\u201D and \u201Cwhat if my answer is wrong?\u201D, with a visible way to adjust, remove the fear that sends her to an agent." },
+
+    // NEXT
+    { lane: "next", q: "qw",
+      name: "Guided document upload",
+      why: "Says which documents count and offers alternatives when shift pay fits no single payslip, aimed at the 28% of income documents needing review; rules first, any AI image check later." },
+    { lane: "next", q: "mp", tag: "Thin slice",
+      name: "Thin affordability helper",
+      why: "A comfortable range with reasons, never defaulting to the highest payment, is the main lever on the 19% guardrail; it only works if it accepts a low-to-high income range, not one fixed figure." },
+    { lane: "next", q: "mp",
+      name: "Explainable recommendation with escalation",
+      why: "A rule-based recommendation that shows its reasoning to consumers and agents and escalates on low confidence, so it can never decide an adverse outcome alone." },
+    { lane: "next", q: "fi", tag: "Launch gate",
+      name: "Minimal vulnerability support path",
+      why: "A visible \u201CI need help\u201D route is required before real traffic for the fairness guardrail; it deliberately raises agent contacts, so count those separately from the primary metric." },
+
+    // LATER
+    { lane: "later", q: "fi",
+      name: "Safety net with reschedule",
+      why: "A written summary, reminders and easy rescheduling protect plans through day 60, but they barely move the 7-day contact metric, so they wait behind the fixes at the income step." },
+    { lane: "later", q: "fi",
+      name: "Basic agent handoff summary",
+      why: "Structured entries, the escalation reason and data freshness stop agents re-verifying from scratch, but they make contacts cheaper rather than rarer, so they can\u2019t move 31% to 26%." },
+
+    // CUT
+    { lane: "cut", q: "ts",
+      name: "Joint plan across both claims",
+      why: "A combined arrangement is a backend and policy problem that doesn\u2019t touch income-step abandonment; revisit a read-only total only if capacity appears." },
+    { lane: "cut", q: "ts",
+      name: "Full agent handoff tooling",
+      why: "Override logging, audit trails and AI summarising are expensive and serve Ops, not Mara; the basic summary covers the need." },
+    { lane: "cut", q: "ts",
+      name: "Autonomous negotiating chatbot",
+      why: "High build cost, and an unexplainable decision-maker on money conflicts with the rule that no model decides an adverse outcome alone." },
+    { lane: "cut", q: "gb",
+      name: "Payment-maximising offer logic",
+      why: "Steering to the highest payment is the opposite of the affordability fix and pushes the 60-day missed-payment rate past 19%." },
+    { lane: "cut", q: "gb",
+      name: "Automated adverse outcomes",
+      why: "Adverse decisions without a human are out of bounds; escalation is the rule, and vulnerable subgroups would be hit first." }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+
+  function cardEl(item) {
+    const li = document.createElement("li");
+    li.className = "card";
+    li.dataset.q = item.q;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.dataset.q = item.q;
+    badge.textContent = QUADS[item.q].label;
+    meta.appendChild(badge);
+    if (item.tag) {
+      const t = document.createElement("span");
+      t.className = "tag";
+      t.textContent = item.tag;
+      meta.appendChild(t);
+    }
+
+    const h = document.createElement("h3");
+    h.textContent = item.name;
+    const p = document.createElement("p");
+    p.textContent = item.why;
+
+    li.append(meta, h, p);
+    return li;
+  }
+
+  // Render lanes
+  ["now", "next", "later", "cut"].forEach((lane) => {
+    const target = $("l-" + lane);
+    const items = ITEMS.filter((i) => i.lane === lane);
+    items.forEach((i) => target.appendChild(cardEl(i)));
+    if (lane !== "cut") $("c-" + lane).textContent = items.length;
+  });
+
+  // Filters
+  let active = "all";
+  const filters = $("filters");
+  const keys = ["all", "qw", "mp", "fi", "ts", "gb"];
+
+  function counts(k) {
+    return k === "all" ? ITEMS.length : ITEMS.filter((i) => i.q === k).length;
+  }
+
+  keys.forEach((k) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.dataset.key = k;
+    b.setAttribute("aria-pressed", k === "all" ? "true" : "false");
+    if (k !== "all") b.title = QUADS[k].hint;
+
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    if (k !== "all") dot.style.background = `var(--${k}-fg, var(--gb-bg))`;
+    if (k === "gb") dot.style.background = "var(--gb-bg)";
+
+    const label = document.createElement("span");
+    label.textContent = k === "all" ? "All" : QUADS[k].label;
+    const n = document.createElement("span");
+    n.className = "n";
+    n.textContent = counts(k);
+
+    if (k !== "all") b.appendChild(dot);
+    b.append(label, n);
+    b.addEventListener("click", () => setFilter(active === k ? "all" : k));
+    filters.appendChild(b);
+  });
+
+  function setFilter(k) {
+    active = k;
+    filters.querySelectorAll(".chip").forEach((c) => {
+      c.setAttribute("aria-pressed", c.dataset.key === k ? "true" : "false");
+    });
+    let shown = 0;
+    document.querySelectorAll(".card").forEach((c) => {
+      const match = k === "all" || c.dataset.q === k;
+      c.classList.toggle("is-dim", !match);
+      if (match) shown++;
+    });
+    $("status").textContent = k === "all"
+      ? `Showing all ${ITEMS.length} items. Select a quadrant to highlight it.`
+      : `${QUADS[k].label}: ${QUADS[k].hint.toLowerCase()}. ${shown} of ${ITEMS.length} items highlighted.`;
+  }
+
+  setFilter("all");
+</script>
+</body>
+</html>
