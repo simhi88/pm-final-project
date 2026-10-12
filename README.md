@@ -9,19 +9,7 @@
 ## Final Project Deliverables
 
 ### Slide 5 · Strategy
-- **Problem:** # Problem Hook & Value Proposition (Module 1)
-
-## Responses
-- **Chosen path, which scenario are you committing to? (StreamLine or RouteLogic, or your own):** Riverty Case Study BU Collection — A Fair Way Forward
-- **Strategic crisis, based on the brief, if the company does nothing for 12 months, what happens to its market position?:** If we do nothing for 12 months, the company will have increased agent costs & fall behind the strategic objective of 80% self-service.
-- **Moment of misery, what is the user likely doing outside the product (Google, spreadsheets, a competitor) because your tool isn’t serving them?:** The user is currently forced to reach out to the agent to get support for the instalment.
-- **Problem hook, summarize the business risk and user pain into one urgent sentence.:** We must solve the rising cost by addressing the user's uncertainties & possibly panic situation.
-- **Value proposition, based on the proposed initiative (Spotlight or Velocity), what is the new value and why is it urgent to launch now?:** For [our consumers], we will [offer a guided portal journey] because [we are losing most starters today right at the beginning of user journey, to align our product priorities with our north-start strategic goal of 80% digital self-service Europewide.
-
-## Cold-read your own hook
-- **Is the business risk high enough to justify a new initiative, a high-stakes threat, or a minor inconvenience?:** Yes, it's a high stake risk because the risk touches cost (agent capacity), strategic portfolio value (company plans that might fail).
-- **Is the moment of misery a systemic problem or just an edge case?:** It's a systematic problem.
-- **Does the value proposition actually remove the obstacle you identified, or is it a generic feature?:** Yes, it will remove the obstacles.
+- **Problem:** We must solve the rising cost by addressing the user's uncertainties & possibly panic situation.
 - **Value proposition:** For [our consumers], we will [offer a guided portal journey] because [we are losing most starters today right at the beginning of user journey, to align our product priorities with our north-start strategic goal of 80% digital self-service Europewide.
 - **Hypothesis:** # Hypothesis & Success Metrics (Module 3)
 
@@ -187,8 +175,22 @@ Share of new agreements kept through 60 days, floor 81%. Warning sign: the miss 
 Bad signal to watch for: Many people see the instalment, and the call rate stays at 31%. Or calls fall and the 60-day miss rate rises. Then she agreed without being able to keep the instalment.
 
 ### Slide 10 · Story
-- **Friction + aha:** _(not filled)_
-- **Takeaways / next:** _(not filled)_
+- **Friction + aha:** - She doesn’t know why the information is needed
+- She fears a wrong answer will backfire
+- She can’t find the documents
+- Her shift-based income fits no single figure
+- She doesn’t know if a plan is affordable or what a missed payment means
+- **Takeaways / next:** Key takeaways:
+- “Why we ask” fixes half of the moment of misery. It answers “why is this needed?” It does not answer “where do I find a document?” or “my income fits no payslip.” Document guidance and variable-income input are what the 31% to 26% target also depends on.
+- Variable-income input is the biggest gap in the roadmap. I scored it Value 5, and it isn’t scheduled. Without it, Q2 still asks Mara for one typical figure.
+- The critical path is approval, not engineering. The build is copy plus components. Legal and Ops sign-off on every sentence sets the release date.
+- The “how it’s used” line carries the most value and the most risk. It addresses her fear that a wrong answer will backfire. But “a close estimate is fine” can invite rough figures and put the 19% guardrail at risk, so it ships only if Ops confirms it’s true today.
+- Neutral wording matters. Any hint that a higher or lower figure helps her changes behaviour, so the copy can’t suggest it.
+- You can’t prove the effect yet. Income-step drop-off has no baseline, so the instrumentation dashboard has to ship first, with a holdout to separate this feature from the other Now items.
+- Five test participants give a direction, not proof. The comprehension and time-on-task evals tell you whether to keep going, not whether you’ve hit the target.
+
+"Aha" moment:
+The aha moment is the moment Mara realises the income question is not a test. It happens at Q2, the typical-month question, because her variable income makes it the hardest to answer. She reads “We ask so we can suggest payments that fit a normal month for you. A close estimate is fine.” Within seconds she stops treating the figure as a trap, types an approximate number, and continues without calling an agent.
 
 ---
 
