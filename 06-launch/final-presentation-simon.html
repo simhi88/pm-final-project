@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riverty Case Study BU Collection: A Fair Way Forward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Antarctican+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07162C;
+    --fg: #ffffff;
+    --muted: #ffffff;
+    --orange: #fb923c;
+    --cyan: #22d3ee;
+    --teal: #34d399;
+    --blue: #60a5fa;
+    --violet: #a78bfa;
+    --pink: #f472b6;
+    --eyebrow: #fdba74;
+    --border: rgba(251, 146, 60, 0.25);
+    --sans: "Saans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: "Antarctican Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    font-size: clamp(13px, min(1.8vh, 1vw), 24px);
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    background: var(--bg);
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  a { color: var(--orange); }
+  :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- chrome ---------- */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 4px; width: 0;
+    background: linear-gradient(90deg, var(--orange), var(--pink));
+    z-index: 30;
+  }
+  .dots {
+    position: fixed; right: 1.3rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 0.95rem; z-index: 25;
+  }
+  .dots button {
+    position: relative; width: 0.7rem; height: 0.7rem; padding: 0; cursor: pointer;
+    border-radius: 50%; border: 1.5px solid var(--orange); background: transparent;
+    transition: transform .15s, background-color .15s;
+  }
+  .dots button::before { content: ""; position: absolute; inset: -0.55rem; }
+  .dots button[aria-current="true"] { background: var(--orange); transform: scale(1.3); }
+  .dots button:hover { background: rgba(251,146,60,.5); }
+
+  /* ---------- slide frame ---------- */
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 3rem 5rem 3rem 4rem;
+    position: relative;
+    background:
+      radial-gradient(ellipse 55% 45% at 92% 0%, rgba(251,146,60,0.10), transparent 70%),
+      radial-gradient(ellipse 45% 40% at 0% 100%, rgba(96,165,250,0.07), transparent 70%),
+      var(--bg);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .wrap { width: 100%; max-width: 98rem; margin: 0 auto; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 0.7rem; margin: 0 0 0.9rem;
+    font-family: var(--mono); font-weight: 500; font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--eyebrow);
+  }
+  .eyebrow b {
+    background: var(--orange); color: var(--bg); border-radius: 0.4rem;
+    padding: 0.15rem 0.55rem; font-weight: 500;
+  }
+
+  h1, h2, h3 { font-family: var(--sans); margin: 0; }
+  h2 { font-weight: 800; font-size: 2.3rem; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 1.4rem; max-width: 64rem; }
+  h3 { font-weight: 700; font-size: 1.05rem; }
+  p { margin: 0; }
+
+  .lbl {
+    font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.04em;
+    color: var(--c, var(--eyebrow)); margin-bottom: 0.45rem;
+  }
+
+  /* ---------- cards ---------- */
+  .card {
+    border: 1px solid var(--border); border-radius: 15px;
+    background: rgba(255,255,255,0.035); padding: 1.15rem 1.3rem;
+  }
+  .card.hero { background: linear-gradient(140deg, rgba(251,146,60,0.22), rgba(167,139,250,0.10) 62%, rgba(34,211,238,0.06)); }
+  .card.key { box-shadow: 0 14px 36px rgba(0,0,0,0.42); }
+  .grid { display: grid; gap: 1.1rem; }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    border: 1px solid var(--pc, var(--orange)); color: var(--pc, var(--orange));
+    background: rgba(255,255,255,0.04); border-radius: 999px; padding: 0.25rem 0.8rem;
+  }
+  .pill.or { --pc: #fb923c; }
+  .pill.cy { --pc: #22d3ee; }
+  .pill.te { --pc: #34d399; }
+  .pill.bl { --pc: #60a5fa; }
+  .pill.vi { --pc: #a78bfa; }
+  .pill.pk { --pc: #f472b6; }
+  .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .hl { color: var(--orange); font-weight: 700; }
+  .hl.cy { color: var(--cyan); }
+  .hl.te { color: var(--teal); }
+  .hl.pk { color: var(--pink); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.55rem; text-decoration: none;
+    background: var(--orange); color: var(--bg); font-weight: 700; font-size: 1rem;
+    border-radius: 999px; padding: 0.7rem 1.35rem;
+    box-shadow: 0 8px 22px rgba(251,146,60,0.35);
+    transition: filter .15s, transform .15s;
+  }
+  .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn.pending {
+    background: transparent; color: var(--fg); border: 1px dashed rgba(251,146,60,0.7);
+    box-shadow: none; cursor: not-allowed;
+  }
+  .btn.pending:hover { transform: none; filter: none; }
+
+  /* ---------- 1 cover ---------- */
+  .cover .wrap { display: grid; grid-template-columns: 1.55fr 1fr; gap: 3rem; align-items: center; }
+  .cover h1 { font-weight: 900; font-size: 3.7rem; line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 1.8rem; }
+  .cover h1 span { color: var(--orange); display: block; }
+  .pitch {
+    border-left: 4px solid var(--orange); padding: 0.3rem 0 0.3rem 1.3rem;
+    font-size: 1.12rem; line-height: 1.5; max-width: 46rem;
+  }
+  .meta { display: grid; gap: 1.1rem; }
+  .meta .row p:last-child { font-size: 1.15rem; font-weight: 700; word-break: break-word; }
+  .meta .row a { font-weight: 700; font-size: 1rem; word-break: break-all; }
+  .hint { margin-top: 2.2rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--eyebrow); }
+
+  /* ---------- 2 strategy ---------- */
+  .strat-top { grid-template-columns: 1fr 1.55fr; margin-bottom: 1.1rem; }
+  .vp p.big { font-size: 1.12rem; line-height: 1.5; }
+  .callout {
+    margin: 0; border: 1px solid var(--border); border-left: 5px solid var(--orange); border-radius: 15px;
+    padding: 1.15rem 1.35rem; background: linear-gradient(140deg, rgba(251,146,60,0.18), rgba(34,211,238,0.06));
+    box-shadow: 0 14px 36px rgba(0,0,0,0.42); font-size: 0.98rem; line-height: 1.55;
+  }
+  .stats { grid-template-columns: repeat(4, 1fr); }
+  .stat { border: 1px solid var(--border); border-radius: 14px; padding: 0.95rem 1.1rem; background: rgba(255,255,255,0.035); }
+  .stat strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 2.3rem; line-height: 1.1; color: var(--c); margin-bottom: 0.3rem; }
+  .stat span { font-size: 0.92rem; }
+
+  /* ---------- 3 research ---------- */
+  .res-top { grid-template-columns: 1.15fr 1fr; margin-bottom: 1.2rem; }
+  .res-top p.txt { font-size: 0.98rem; line-height: 1.5; }
+  .quote { font-size: 1.05rem; line-height: 1.5; border-left: 3px solid var(--cyan); padding-left: 1rem; margin-top: 0.4rem; }
+  .jm { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; position: relative; }
+  .stage { position: relative; display: flex; flex-direction: column; gap: 0.6rem; padding: 1rem 1.1rem 1.1rem; }
+  .stage:not(:last-child)::after {
+    content: ""; position: absolute; top: 2.1rem; right: -1.2rem; width: 1.2rem; height: 2px;
+    background: var(--orange);
+  }
+  .stage .name { font-weight: 800; font-size: 1.25rem; }
+  .step { font-size: 0.92rem; line-height: 1.4; }
+  .step small {
+    display: inline-block; font-family: var(--mono); font-size: 0.65rem; border-radius: 999px;
+    padding: 0.05rem 0.5rem; margin-left: 0.3rem; vertical-align: 0.1em;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  .step small.inf { border-style: dashed; }
+  .stage.misery {
+    border-color: var(--pink);
+    background: linear-gradient(160deg, rgba(244,114,182,0.22), rgba(251,146,60,0.10));
+    box-shadow: 0 0 0 2px rgba(244,114,182,0.35), 0 14px 36px rgba(244,114,182,0.18);
+  }
+  .misery-tag {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 500; color: var(--bg);
+    background: var(--pink); border-radius: 999px; padding: 0.1rem 0.6rem; align-self: flex-start;
+  }
+  .misery-text { font-size: 0.88rem; line-height: 1.4; border-top: 1px solid rgba(244,114,182,0.5); padding-top: 0.55rem; }
+  .src { margin-top: 0.8rem; font-family: var(--mono); font-size: 0.68rem; color: var(--eyebrow); }
+
+  /* ---------- 4 blueprint ---------- */
+  .anchors { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: -0.4rem 0 1.1rem; }
+  .bp { grid-template-columns: 1.65fr 1fr; align-items: start; }
+  .lanes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+  .lane { padding: 0.95rem 1rem 1rem; }
+  .lane h3 { font-size: 1.2rem; margin-bottom: 0.15rem; }
+  .lane .when { font-family: var(--mono); font-size: 0.68rem; color: var(--eyebrow); margin-bottom: 0.8rem; }
+  .lane.now { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(251,146,60,0.2), 0 14px 36px rgba(0,0,0,0.42); background: linear-gradient(160deg, rgba(251,146,60,0.22), rgba(255,255,255,0.03)); }
+  .item { border-left: 4px solid var(--qc); background: rgba(255,255,255,0.05); border-radius: 9px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.9rem; font-weight: 600; line-height: 1.3; }
+  .item i { display: block; font-style: normal; font-family: var(--mono); font-weight: 400; font-size: 0.65rem; color: var(--qc); margin-top: 0.15rem; }
+  .qw { --qc: #34d399; } .mp { --qc: #a78bfa; } .fi { --qc: #60a5fa; }
+  .cutbox { margin-top: 0.9rem; border-color: rgba(244,114,182,0.45); }
+  .cutbox ul { margin: 0.2rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .cutbox li { font-size: 0.8rem; border: 1px dashed rgba(244,114,182,0.7); color: var(--fg); border-radius: 999px; padding: 0.15rem 0.7rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 0.8rem; font-family: var(--mono); font-size: 0.68rem; }
+  .legend span::before { content: ""; display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--qc); margin-right: 0.35rem; vertical-align: -0.05em; }
+  .prd p.vision { font-size: 1rem; line-height: 1.45; margin-bottom: 0.9rem; }
+  .prd ul { margin: 0 0 0.8rem; padding-left: 1.1rem; font-size: 0.9rem; line-height: 1.4; }
+  .prd li { margin-bottom: 0.25rem; }
+  .prd li::marker { color: var(--orange); }
+  .prd .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; margin-top: 0.7rem; }
+
+  /* ---------- 5 validation ---------- */
+  .val { grid-template-columns: 1.7fr 1fr; align-items: stretch; margin-bottom: 1rem; }
+  .plan { display: grid; grid-template-columns: 11.5rem 1fr; padding: 0; overflow: hidden; }
+  .plan .k, .plan .v { padding: 0.8rem 1.1rem; border-bottom: 1px solid rgba(251,146,60,0.18); font-size: 0.93rem; line-height: 1.45; }
+  .plan .k { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--eyebrow); background: rgba(251,146,60,0.07); }
+  .plan .k:nth-last-child(2), .plan .v:last-child { border-bottom: 0; }
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .vs div { border-radius: 10px; padding: 0.5rem 0.7rem; border: 1px solid rgba(255,255,255,0.25); }
+  .vs div.var { border-color: var(--orange); background: rgba(251,146,60,0.12); }
+  .vs b { display: block; font-family: var(--mono); font-size: 0.68rem; font-weight: 500; margin-bottom: 0.15rem; }
+  .kpis { display: grid; gap: 1rem; grid-template-rows: 1fr 1fr; }
+  .kpi { display: flex; flex-direction: column; justify-content: center; }
+  .kpi .num { font-family: var(--mono); font-weight: 500; font-size: 2.7rem; line-height: 1.05; color: var(--c); }
+  .kpi .num small { font-size: 1rem; color: var(--fg); }
+  .kpi p.d { font-size: 0.9rem; line-height: 1.4; margin-top: 0.35rem; }
+  .rules { grid-template-columns: repeat(3, 1fr); margin-bottom: 0.9rem; }
+  .rule { border-top: 4px solid var(--c); }
+  .rule .r-h { font-weight: 800; font-size: 1.1rem; color: var(--c); margin-bottom: 0.3rem; }
+  .rule p { font-size: 0.9rem; line-height: 1.42; }
+  .pending-strip {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; border: 1px dashed rgba(251,146,60,0.6);
+    border-radius: 14px; padding: 0.7rem 1.1rem; font-size: 0.92rem;
+  }
+
+  /* ---------- 6 launch ---------- */
+  .gtm { grid-template-columns: 1fr 1.5fr; margin-bottom: 1rem; align-items: stretch; }
+  .gtm-l p.v { font-size: 0.93rem; line-height: 1.45; margin-bottom: 0.75rem; }
+  .tier { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.75rem; }
+  .tier b {
+    display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 12px;
+    background: var(--orange); color: var(--bg); font-size: 1.5rem; font-weight: 900;
+  }
+  .tier span { font-size: 0.93rem; line-height: 1.35; }
+  .dash { grid-template-columns: repeat(3, 1fr); }
+  .metric { display: flex; flex-direction: column; gap: 0.5rem; border-top: 4px solid var(--c); }
+  .metric h3 { font-size: 0.98rem; line-height: 1.3; }
+  .metric .big { font-family: var(--mono); font-weight: 500; font-size: 2.2rem; line-height: 1; color: var(--c); }
+  .metric .big small { font-size: 0.8rem; color: var(--fg); }
+  .metric .warn { margin-top: auto; font-size: 0.82rem; line-height: 1.38; border-top: 1px dashed rgba(244,114,182,0.6); padding-top: 0.55rem; }
+  .metric .warn b { font-family: var(--mono); font-weight: 500; font-size: 0.68rem; color: var(--pink); display: block; margin-bottom: 0.15rem; }
+  .bad {
+    border: 1px solid var(--pink); border-radius: 15px; padding: 0.9rem 1.2rem; margin-bottom: 0.9rem;
+    background: linear-gradient(140deg, rgba(244,114,182,0.20), rgba(251,146,60,0.07));
+    box-shadow: 0 14px 36px rgba(244,114,182,0.14); font-size: 0.98rem; line-height: 1.5;
+  }
+  .phases { grid-template-columns: repeat(3, 1fr); }
+  .phase { padding: 0.8rem 1rem; }
+  .phase p { font-size: 0.84rem; line-height: 1.4; }
+  .phase .lbl { margin-bottom: 0.25rem; }
+  .decision { margin-top: 0.8rem; font-size: 0.88rem; }
+
+  /* ---------- 7 story ---------- */
+  .story-top { grid-template-columns: 1.35fr 1fr; margin-bottom: 1rem; align-items: stretch; }
+  .fr { display: grid; gap: 0.55rem; }
+  .fr .f { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 1rem; font-size: 0.95rem; line-height: 1.3; }
+  .fr .f .tag { flex: none; font-family: var(--mono); font-size: 0.68rem; font-weight: 500; border-radius: 999px; padding: 0.1rem 0.7rem; border: 1px solid var(--tc); color: var(--tc); }
+  .aha p.a1 { font-size: 1.12rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.6rem; }
+  .aha p.a2 { font-size: 0.95rem; line-height: 1.5; }
+  .story-bot { grid-template-columns: 2.1fr 1fr; align-items: start; }
+  .take { column-count: 2; column-gap: 1.6rem; margin: 0; padding: 0; list-style: none; font-size: 0.84rem; line-height: 1.4; }
+  .take li { break-inside: avoid; margin-bottom: 0.55rem; padding-left: 0.9rem; position: relative; }
+  .take li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--orange); }
+  .next ol { margin: 0; padding-left: 1.2rem; font-size: 0.93rem; line-height: 1.45; }
+  .next li { margin-bottom: 0.5rem; }
+  .next li::marker { color: var(--orange); font-weight: 700; }
+
+  /* ---------- 8 thanks ---------- */
+  .thanks .wrap { text-align: left; }
+  .thanks h2 { font-weight: 900; font-size: 5rem; letter-spacing: -0.03em; margin-bottom: 1.6rem; }
+  .thanks .grid { grid-template-columns: repeat(3, 1fr); margin-bottom: 1.6rem; max-width: 80rem; }
+  .thanks .v { font-size: 1.15rem; font-weight: 700; word-break: break-word; }
+  .submit {
+    display: inline-flex; align-items: center; gap: 0.8rem; border-radius: 999px; padding: 0.9rem 1.7rem;
+    background: linear-gradient(90deg, rgba(251,146,60,0.30), rgba(244,114,182,0.22));
+    border: 1px solid var(--orange); font-weight: 800; font-size: 1.25rem;
+    box-shadow: 0 14px 36px rgba(251,146,60,0.22);
+  }
+  .submit svg { flex: none; }
+  .thanks .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .slide { padding: 2.2rem 1.3rem 2.2rem 1.1rem; }
+    .dots { right: 0.4rem; gap: 0.7rem; }
+    .cover .wrap, .strat-top, .stats, .res-top, .jm, .bp, .lanes, .val, .rules, .gtm, .dash, .phases,
+    .story-top, .story-bot, .thanks .grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stage:not(:last-child)::after { display: none; }
+    .cover h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    .thanks h2 { font-size: 3rem; }
+    .take { column-count: 1; }
+    .plan { grid-template-columns: 1fr; }
+    .plan .k { border-bottom: 0; padding-bottom: 0.2rem; }
+    .kpis { grid-template-rows: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress" role="presentation"></div>
+<nav class="dots" id="dots" aria-label="Slide navigation"></nav>
+
+<main>
+
+  <!-- 1. COVER -->
+  <section class="slide cover" id="s1" data-title="Cover">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow"><b>Final Project</b>Product School Product Management Certification</p>
+        <h1>Riverty Case Study BU Collection — <span>A Fair Way Forward</span></h1>
+        <p class="pitch">For our consumers, we will offer a guided portal journey because we are losing most starters today right at the beginning of user journey, to align our product priorities with our north-star strategic goal of <span class="hl">80% digital self-service Europewide</span>.</p>
+        <p class="hint">Navigate with ArrowDown, ArrowUp, Space, Home, End. Esc returns here.</p>
+      </div>
+      <aside class="card hero key meta" aria-label="Project details">
+        <div class="row">
+          <p class="lbl">Name / cohort</p>
+          <p>Simon Hinz / Cohort 1</p>
+        </div>
+        <div class="row">
+          <p class="lbl">Repo</p>
+          <p><a href="https://github.com/simhi88/pm-final-project" target="_blank" rel="noopener">https://github.com/simhi88/pm-final-project</a></p>
+        </div>
+        <div class="row">
+          <p class="lbl">Prototype</p>
+          <p><a class="btn pending" data-proto href="#">Prototype link pending</a></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. STRATEGY (Slide 5) -->
+  <section class="slide" id="s2" data-title="Strategy">
+    <div class="wrap">
+      <p class="eyebrow"><b>05</b>Strategy</p>
+      <p class="lbl">Problem hook</p>
+      <h2>We must solve the rising cost by addressing the user’s uncertainties &amp; possibly panic situation.</h2>
+
+      <div class="grid strat-top">
+        <div class="card hero key vp">
+          <p class="lbl">Value proposition</p>
+          <p class="big">For our consumers, we will offer a guided portal journey because we are losing most starters today right at the beginning of user journey, to align our product priorities with our north-star strategic goal of <span class="hl">80% digital self-service Europewide</span>.</p>
+        </div>
+        <blockquote class="callout">
+          <p class="lbl" style="--c:#fdba74">Data-backed hypothesis</p>
+          Based on the brief’s description of Mara stalling at the income step and calling an agent, and on <span class="hl cy">31% of journey starters contacting an agent within 7 days</span>, I believe that a guided portal journey explaining why income is requested, what is affordable and what a missed payment means, for variable-income consumers with multiple claims like Mara, will result in more of them agreeing a plan without calling an agent, as measured by a <span class="hl">5-point reduction (31% to 26%)</span> in 7-day agent contact among journey starters. I will protect the 60-day missed-payment rate on new agreements (<span class="hl pk">19% baseline</span>, must not rise in any tracked subgroup). I will make a go/no-go decision after <span class="hl te">10 weeks</span> of pilot data in Germany, which allows 60 days of post-agreement follow-up.
+        </blockquote>
+      </div>
+
+      <div class="grid stats" aria-label="Quantitative evidence">
+        <div class="stat" style="--c:#22d3ee"><strong>31%</strong><span>of journey starters contact an agent within 7 days</span></div>
+        <div class="stat" style="--c:#60a5fa"><strong>28%</strong><span>of uploaded income documents need clarification or review</span></div>
+        <div class="stat" style="--c:#f472b6"><strong>19%</strong><span>of new agreements miss a payment within 60 days</span></div>
+        <div class="stat" style="--c:#34d399"><strong>46%</strong><span>of started journeys end in an agreement</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. RESEARCH (Slide 6) -->
+  <section class="slide" id="s3" data-title="Research">
+    <div class="wrap">
+      <p class="eyebrow"><b>06</b>Research</p>
+      <h2>She finally reaches an agent, and has to start from zero.</h2>
+
+      <div class="grid res-top">
+        <div class="card key">
+          <p class="lbl" style="--c:#fdba74">Competitive analysis: her workaround</p>
+          <div class="pills" style="margin-bottom:0.7rem">
+            <span class="pill cy">Phone</span>
+            <span class="pill cy">Banking app</span>
+          </div>
+          <p class="txt">She abandons the journey and phones an agent. Beforehand she probably searches email, photos or her banking app for proof of income and estimates affordability on her own. On the call she restates everything because nothing she entered online reaches the agent.</p>
+        </div>
+        <div class="card hero key">
+          <p class="lbl" style="--c:#22d3ee">Evidence: behavioural (strongest)</p>
+          <p class="quote">Consumers who start online “often reach him with incomplete information, so he repeats identity, affordability and case checks.”</p>
+          <p class="txt" style="margin-top:0.6rem">Daniel repeats checks because online input doesn’t travel with the consumer.</p>
+        </div>
+      </div>
+
+      <div class="jm" aria-label="Journey map: Orient, Share, Choose, Commit">
+        <div class="card stage">
+          <p class="lbl">Stage 1</p>
+          <p class="name">Orient</p>
+          <p class="step">Re-opens the reminder and enters the portal on her phone <small>stated</small></p>
+        </div>
+        <div class="card stage misery">
+          <span class="misery-tag">Moment of misery</span>
+          <p class="name">Share</p>
+          <p class="step">Starts the instalment journey, then stalls at the income step <small>stated</small></p>
+          <p class="step">Gathers her own evidence outside the portal <small class="inf">inferred</small></p>
+          <p class="misery-text">She reaches the income step, is asked for documents she can’t easily find, and doesn’t know why they’re needed, whether the plan is affordable, or what happens if she misses a payment.</p>
+        </div>
+        <div class="card stage">
+          <p class="lbl">Stage 3</p>
+          <p class="name">Choose</p>
+          <p class="step">Estimates affordability on her own <small class="inf">inferred</small></p>
+        </div>
+        <div class="card stage">
+          <p class="lbl">Stage 4</p>
+          <p class="name">Commit</p>
+          <p class="step">Abandons the journey and calls an agent <small>stated</small></p>
+        </div>
+      </div>
+      <p class="src">Journey map source: 02-discovery/Screenshot 2026-10-06 144355.png</p>
+    </div>
+  </section>
+
+  <!-- 4. BLUEPRINT (Slide 7) -->
+  <section class="slide" id="s4" data-title="Blueprint">
+    <div class="wrap">
+      <p class="eyebrow"><b>07</b>Blueprint</p>
+      <h2>Roadmap, PRD &amp; Prototype</h2>
+
+      <div class="anchors">
+        <span class="pill or">Persona: Mara, 38, shift worker, two open claims</span>
+        <span class="pill cy">Primary: 7-day agent contact, 31% to 26%</span>
+        <span class="pill pk">Guardrail: 60-day missed payments at or below 19%</span>
+      </div>
+
+      <div class="grid bp">
+        <div>
+          <div class="lanes">
+            <div class="card lane now">
+              <h3>Now</h3>
+              <p class="when">3-week sprint</p>
+              <div class="item fi">Instrumentation dashboard<i>Fill-In, build first</i></div>
+              <div class="item qw">“Why we ask” explanations<i>Quick Win</i></div>
+              <div class="item qw">Consequence preview<i>Quick Win</i></div>
+            </div>
+            <div class="card lane">
+              <h3>Next</h3>
+              <p class="when">Following 1 to 2 sprints</p>
+              <div class="item qw">Guided document upload<i>Quick Win</i></div>
+              <div class="item mp">Thin affordability helper<i>Major Project, thin slice</i></div>
+              <div class="item mp">Explainable recommendation with escalation<i>Major Project</i></div>
+              <div class="item fi">Minimal vulnerability support path<i>Fill-In, launch gate</i></div>
+            </div>
+            <div class="card lane">
+              <h3>Later</h3>
+              <p class="when">Backlog</p>
+              <div class="item fi">Safety net with reschedule<i>Fill-In</i></div>
+              <div class="item fi">Basic agent handoff summary<i>Fill-In</i></div>
+            </div>
+          </div>
+          <div class="card cutbox">
+            <p class="lbl" style="--c:#f472b6">Cut list</p>
+            <ul>
+              <li>Joint plan across both claims</li>
+              <li>Full agent handoff tooling</li>
+              <li>Autonomous negotiating chatbot</li>
+              <li>Payment-maximising offer logic</li>
+              <li>Automated adverse outcomes</li>
+            </ul>
+          </div>
+          <div class="legend" aria-label="Quadrant legend">
+            <span class="qw">Quick Win</span><span class="mp">Major Project</span><span class="fi">Fill-In</span>
+          </div>
+        </div>
+
+        <div class="card hero key prd">
+          <p class="lbl">PRD highlights: “Why we ask”</p>
+          <p class="vision">At every income question, Mara sees in one plain sentence why we ask, so she keeps going instead of calling an agent.</p>
+          <p class="lbl" style="--c:#34d399">Must have</p>
+          <ul>
+            <li>An inline note on every income-step question, including the document request</li>
+            <li>A reason of 20 words or fewer; “how it’s used” only if Ops confirms it</li>
+            <li>Always visible on a 360px phone, no tap needed</li>
+          </ul>
+          <p class="lbl" style="--c:#f472b6">Won’t have, now</p>
+          <ul>
+            <li>AI-generated explanations, chatbot, or any change to the income step itself</li>
+          </ul>
+          <p class="lbl" style="--c:#22d3ee">Evals</p>
+          <ul>
+            <li>At least 80% comprehension accuracy</li>
+            <li>Time on task at most 110% of control</li>
+            <li>100% of notes pass the copy checklist</li>
+          </ul>
+          <div class="foot">
+            <a class="btn pending" data-proto href="#">Prototype link pending</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. VALIDATION (Slide 8) -->
+  <section class="slide" id="s5" data-title="Validation">
+    <div class="wrap">
+      <p class="eyebrow"><b>08</b>Validation</p>
+      <h2>Experimentation Plan</h2>
+
+      <div class="grid val">
+        <div class="card key plan">
+          <div class="k">Hypothesis under test</div>
+          <div class="v">A guided portal journey explaining why income is requested, what is affordable and what a missed payment means, for variable-income consumers with multiple claims like Mara, will result in more of them agreeing a plan without calling an agent.</div>
+          <div class="k">Control vs variant</div>
+          <div class="v">
+            <div class="vs">
+              <div><b>Control</b>Current portal journey (comparison group)</div>
+              <div class="var"><b>Variant</b>Guided portal journey with “Why we ask” on the income step</div>
+            </div>
+            <p style="margin-top:0.5rem; font-size:0.88rem">Pilot in Germany, one segment, 50/50. Beta: 14 days of enrollment plus 7 days of follow-up. Then about 10 weeks per consumer cohort, because the guardrail needs 60 days of post-agreement data.</p>
+          </div>
+          <div class="k">Primary metric</div>
+          <div class="v">Share of journey starters who contact an agent within 7 days, measured in the pilot segment against a comparison group.</div>
+          <div class="k">Guardrail metric</div>
+          <div class="v">60-day missed-payment rate on new agreements must not rise above the 19% baseline, in every tracked subgroup.</div>
+          <div class="k">Decision rule</div>
+          <div class="v">Instrumentation must exist before launch to establish a clean baseline. Rules below.</div>
+        </div>
+
+        <div class="kpis">
+          <div class="card hero key kpi" style="--c:#22d3ee">
+            <p class="lbl" style="--c:#22d3ee">Primary: baseline and MDE</p>
+            <p class="num">31% <small>to</small> 26%</p>
+            <p class="d">Minimum detectable effect: a 5-point reduction in 7-day agent contact.</p>
+          </div>
+          <div class="card key kpi" style="--c:#f472b6; border-color: rgba(244,114,182,0.5)">
+            <p class="lbl" style="--c:#f472b6">Guardrail: must not drop</p>
+            <p class="num">≤ 19%</p>
+            <p class="d">60-day missed-payment rate in every tracked subgroup.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid rules">
+        <div class="card rule" style="--c:#34d399">
+          <p class="r-h">Ship (scale)</p>
+          <p>The 7-day contact rate falls by at least 5 points and the 60-day missed-payment rate is at or below 19% in every tracked subgroup.</p>
+        </div>
+        <div class="card rule" style="--c:#fb923c">
+          <p class="r-h">Iterate (pivot)</p>
+          <p>Contact falls but missed payments rise, or contact doesn’t move, which means the problem sits elsewhere, such as documents or offer logic.</p>
+        </div>
+        <div class="card rule" style="--c:#f472b6">
+          <p class="r-h">Kill or pause</p>
+          <p>The guardrail worsens or a fairness issue appears in any subgroup.</p>
+        </div>
+      </div>
+
+      <div class="pending-strip">
+        <span class="pill or">Findings &amp; decision</span>
+        <span>To be added after the pilot has run. No results yet.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LAUNCH (Slide 9) -->
+  <section class="slide" id="s6" data-title="Launch">
+    <div class="wrap">
+      <p class="eyebrow"><b>09</b>Launch</p>
+      <h2>GTM Launch Plan: “Why we ask”</h2>
+
+      <div class="grid gtm">
+        <div class="card hero key gtm-l">
+          <p class="lbl">Goal</p>
+          <p class="v"><b>Engagement.</b> Encourage the users to add the information we ask for.</p>
+          <p class="lbl">Audience</p>
+          <p class="v">Mara, 38, a shift worker with variable but stable income and two open claims. She can’t pay the balance in one go and opens the portal on her phone, after a digital reminder, with very little time. Pilot segment: Germany.</p>
+          <p class="lbl">Launch tier</p>
+          <div class="tier"><b>S</b><span><strong>Minimal.</strong> We’re only adjusting content in an already existing feature.</span></div>
+          <p class="lbl">Channels</p>
+          <div class="pills">
+            <span class="pill cy">Owned: Consumer Portal</span>
+            <span class="pill te">Owned: E-Mail with deeplink to the portal</span>
+            <span class="pill vi">Owned: Letter</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="lbl" style="--c:#fdba74">Success-metrics dashboard</p>
+          <div class="grid dash">
+            <div class="card key metric" style="--c:#22d3ee">
+              <h3>Share of starters who contact an agent within 7 days</h3>
+              <p class="big">31% <small>baseline</small></p>
+              <p style="font-size:0.85rem">Target: at least 5 percentage points lower.</p>
+              <p class="warn"><b>Warning sign</b>The rate falls and the 60-day keep rate drops below 81%.</p>
+            </div>
+            <div class="card key metric" style="--c:#fb923c">
+              <h3>Share who see the comfortable instalment and the sentence before they confirm</h3>
+              <p class="big">Seen <small>before confirm</small></p>
+              <p style="font-size:0.85rem">Measured at the confirmation step.</p>
+              <p class="warn"><b>Warning sign</b>Confirmations rise while the sentence was not shown.</p>
+            </div>
+            <div class="card key metric" style="--c:#34d399">
+              <h3>Share of new agreements kept through 60 days</h3>
+              <p class="big">≥ 81% <small>floor</small></p>
+              <p style="font-size:0.85rem">Equivalent to a miss rate of 19% or less.</p>
+              <p class="warn"><b>Warning sign</b>The miss rate rises above 19%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bad">
+        <span class="hl pk">Bad signal to watch for: </span>Many people see the instalment, and the call rate stays at 31%. Or calls fall and the 60-day miss rate rises. Then she agreed without being able to keep the instalment.
+      </div>
+
+      <div class="grid phases">
+        <div class="card phase"><p class="lbl">Phase 1, beta</p><p>50/50 in the one segment, 14 days of enrollment plus 7 days of follow-up. Do not ship on day 21.</p></div>
+        <div class="card phase"><p class="lbl">Phase 2, launch</p><p>Only once, 60 days after agreement, the keep rate in the variant is at least 81% and the call rate has fallen by at least 5 percentage points below 31%. Portal only, for this segment.</p></div>
+        <div class="card phase"><p class="lbl">Phase 3, after launch</p><p>Keep reading the keep rate, with the one-pager in use.</p></div>
+      </div>
+      <p class="decision"><span class="hl">Likely post-launch decision:</span> Repeat. Double only if both are true: at least 5 percentage points fewer calls and a keep rate of at least 81%.</p>
+    </div>
+  </section>
+
+  <!-- 7. STORY (Slide 10) -->
+  <section class="slide" id="s7" data-title="Story">
+    <div class="wrap">
+      <p class="eyebrow"><b>10</b>Story</p>
+      <h2>Friction points and the aha moment</h2>
+
+      <div class="grid story-top">
+        <div>
+          <p class="lbl">Friction points</p>
+          <div class="fr">
+            <div class="card f" style="--tc:#34d399">She doesn’t know why the information is needed<span class="tag">Fixed by “Why we ask”</span></div>
+            <div class="card f" style="--tc:#fb923c">She fears a wrong answer will backfire<span class="tag">Partly fixed</span></div>
+            <div class="card f" style="--tc:#f472b6">She can’t find the documents<span class="tag">Not fixed</span></div>
+            <div class="card f" style="--tc:#f472b6">Her shift-based income fits no single figure<span class="tag">Not fixed</span></div>
+            <div class="card f" style="--tc:#f472b6">She doesn’t know if a plan is affordable or what a missed payment means<span class="tag">Not fixed</span></div>
+          </div>
+        </div>
+        <div class="card hero key aha">
+          <p class="lbl" style="--c:#fdba74">The “aha” moment</p>
+          <p class="a1">The aha moment is the moment Mara realises the income question is not a test.</p>
+          <p class="a2">It happens at Q2, the typical-month question, because her variable income makes it the hardest to answer. She reads <span class="hl">“We ask so we can suggest payments that fit a normal month for you. A close estimate is fine.”</span> Within seconds she stops treating the figure as a trap, types an approximate number, and continues without calling an agent.</p>
+        </div>
+      </div>
+
+      <div class="grid story-bot">
+        <div class="card">
+          <p class="lbl">Key takeaways</p>
+          <ul class="take">
+            <li><b>“Why we ask” fixes half of the moment of misery.</b> It answers “why is this needed?” It does not answer “where do I find a document?” or “my income fits no payslip.” Document guidance and variable-income input are what the 31% to 26% target also depends on.</li>
+            <li><b>Variable-income input is the biggest gap in the roadmap.</b> I scored it Value 5, and it isn’t scheduled. Without it, Q2 still asks Mara for one typical figure.</li>
+            <li><b>The critical path is approval, not engineering.</b> The build is copy plus components. Legal and Ops sign-off on every sentence sets the release date.</li>
+            <li><b>The “how it’s used” line carries the most value and the most risk.</b> It addresses her fear that a wrong answer will backfire. But “a close estimate is fine” can invite rough figures and put the 19% guardrail at risk, so it ships only if Ops confirms it’s true today.</li>
+            <li><b>Neutral wording matters.</b> Any hint that a higher or lower figure helps her changes behaviour, so the copy can’t suggest it.</li>
+            <li><b>You can’t prove the effect yet.</b> Income-step drop-off has no baseline, so the instrumentation dashboard has to ship first, with a holdout to separate this feature from the other Now items.</li>
+            <li><b>Five test participants give a direction, not proof.</b> The comprehension and time-on-task evals tell you whether to keep going, not whether you’ve hit the target.</li>
+          </ul>
+        </div>
+        <div class="card key next">
+          <p class="lbl" style="--c:#fdba74">What I would do next</p>
+          <ol>
+            <li>Ship instrumentation first, with a holdout, to get the baseline.</li>
+            <li>Get Legal and Ops sign-off on every sentence.</li>
+            <li>Schedule document guidance and variable-income input, which the 31% to 26% target also depends on.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. THANK YOU -->
+  <section class="slide thanks" id="s8" data-title="Thank you">
+    <div class="wrap">
+      <p class="eyebrow"><b>Submit</b>Final Project</p>
+      <h2>Thank you</h2>
+      <div class="grid">
+        <div class="card hero key">
+          <p class="lbl">Repo</p>
+          <p class="v"><a href="https://github.com/simhi88/pm-final-project" target="_blank" rel="noopener">https://github.com/simhi88/pm-final-project</a></p>
+        </div>
+        <div class="card key">
+          <p class="lbl">Name / cohort</p>
+          <p class="v">Simon Hinz</p>
+          <p style="margin-top:0.5rem"><span class="pill or">Cohort 1</span></p>
+        </div>
+        <div class="card key">
+          <p class="lbl">Deck file</p>
+          <p class="v">06-launch/final-presentation.html</p>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="submit">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#fb923c" stroke-width="2"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fb923c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Submit to the learning platform
+        </span>
+        <a class="btn pending" data-proto href="#">Prototype link pending</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Paste the prototype URL here and every "View prototype" button goes live.
+  const PROTOTYPE_URL = "";
+
+  (function () {
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsEl = document.getElementById("dots");
+    const bar = document.getElementById("progress");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let current = 0;
+
+    // Prototype buttons
+    document.querySelectorAll("[data-proto]").forEach((a) => {
+      if (PROTOTYPE_URL) {
+        a.href = PROTOTYPE_URL;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = "View prototype";
+        a.classList.remove("pending");
+      } else {
+        a.setAttribute("aria-disabled", "true");
+        a.addEventListener("click", (e) => e.preventDefault());
+      }
+    });
+
+    // Dot nav
+    const dots = slides.map((s, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.title = (i + 1) + ". " + (s.dataset.title || "Slide");
+      b.setAttribute("aria-label", "Go to slide " + (i + 1) + ": " + (s.dataset.title || ""));
+      b.addEventListener("click", () => go(i));
+      dotsEl.appendChild(b);
+      return b;
+    });
+
+    function updateDots() {
+      dots.forEach((d, i) => d.setAttribute("aria-current", i === current ? "true" : "false"));
+    }
+
+    function go(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      slides[i].scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }
+
+    // Track current slide (the one crossing the middle of the viewport)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          current = slides.indexOf(e.target);
+          updateDots();
+        }
+      });
+    }, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
+    slides.forEach((s) => io.observe(s));
+    updateDots();
+
+    // Progress bar
+    function progress() {
+      const el = document.scrollingElement || document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+    }
+    window.addEventListener("scroll", progress, { passive: true });
+    window.addEventListener("resize", progress);
+    progress();
+
+    // Keyboard
+    document.addEventListener("keydown", (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const t = e.target;
+      const typing = t && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName);
+      switch (e.key) {
+        case "ArrowDown":
+        case "PageDown":
+          e.preventDefault(); go(current + 1); break;
+        case "ArrowUp":
+        case "PageUp":
+          e.preventDefault(); go(current - 1); break;
+        case " ":
+        case "Spacebar":
+          if (typing) return;
+          e.preventDefault(); go(current + (e.shiftKey ? -1 : 1)); break;
+        case "Home":
+          e.preventDefault(); go(0); break;
+        case "End":
+          e.preventDefault(); go(slides.length - 1); break;
+        case "Escape":
+          go(0); break;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
